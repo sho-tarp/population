@@ -22,7 +22,7 @@ function getPopulationProc() {
 				var index = Number( document.getElementById( "prefectures" ).value );
 				populations[ index-1 ] = dataObject;
 				showPopulation();
-				
+
 			} else {
 				console.log( xhr.status );
 			}
@@ -30,18 +30,17 @@ function getPopulationProc() {
 	}
 };
 
-function allProc() {
+function getAllPopulationProc() {
 
-	if ( xhr.readyState == 4) {
-		if ( xhr.status == 0) {
-			console.log("allProc 通信失敗");
+	if ( xhr.readyState == 4 ) {
+		if ( xhr.status == 0 ) {
+			console.log("getAllPopulationProc 通信失敗");
 		} else {
 			if ( xhr.status === 200 ) {
 				console.log( xhr.responseText );
+
 				var index = Number( document.getElementById("prefectures").value);
-				//prefecturesPopulations[index-1] = xhr.responseText;
-				prefecturePopulationXML[index-1] = xhr.responseText;
-				
+				prefecturePopulationXML[index-1] = xhr.responseText;				
 				outputCSV();
 				
 			} else {
@@ -163,7 +162,7 @@ function getAllPopulation(){
 
 	if (typeof prefecturePopulationXML[index-1] === "undefined"){
 		xhr.open( "GET", url + index);
-		xhr.onreadystatechange = allProc;
+		xhr.onreadystatechange = getAllPopulationProc;
 		xhr.send();
 	} else {
 		outputCSV();
