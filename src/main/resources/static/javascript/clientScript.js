@@ -62,13 +62,17 @@ function getPopulation() {
 	
 	//キャッシュ機能（一度読み込んだデータはリクエストしない）
 	if (typeof populations[index-1] === "undefined"){
-		xhr.open( "GET", url + index);
-		xhr.onreadystatechange = getPopulationProc;
-		xhr.send();
+		XMLRequest(url, index, getPopulationProc);
 	} else {
 		showPopulation();
 	}	
 };
+
+function XMLRequest( url, pulldownIndex, functionName ) {
+		xhr.open( "GET", url + pulldownIndex);
+		xhr.onreadystatechange = functionName;
+		xhr.send();
+}
 
 function showPopulation(){
 	var index = document.getElementById("prefectures").value
