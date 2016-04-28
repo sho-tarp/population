@@ -126,13 +126,7 @@ function outputCSV(){
 		var year = yearElement.getAttribute("year");
 		var element = yearElement.firstChild;
 		
-  		while(element != null) {
-	 		var nodeName = element.nodeName;
-		 	var nodeText = element.textContent;
-		 	//alert(year+" "+nodeName+":"+nodeText);
-			dataObject[nodeName] = nodeText;
-		 	element = element.nextSibling;
-		}
+		dataObject = searchPopulation( element );
 		
 		CSVString += year+","+
 					dataObject["population"]+","+
