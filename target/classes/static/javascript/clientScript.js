@@ -136,22 +136,7 @@ function outputCSV(){
 		dataObject = {};
 		yearElement = yearElement.nextSibling;
 	}
-		
-	//CSV作成
-	/*
-	var blob = new Blob([CSVString], {type:"text/csv"});
-	var filename = prefecture + ".csv"
 	
-	if (window.navigator.msSaveBlob) {
-		window.navigator.msSaveBlob(blob, filename); 
-		
-		// msSaveOrOpenBlobの場合はファイルを保存せずに開ける
-        window.navigator.msSaveOrOpenBlob(blob, filename); 
-        } else {
-        	document.getElementById("download").href = window.URL.createObjectURL(blob);
-        	document.getElementById("download").download = filename;
-        }
-    */
     createCSV( CSVString, index);
         
     document.getElementById( "download" ).click();
@@ -178,14 +163,10 @@ function getAllPopulation(){
 	var url = "/api/population/all?id=";
 	var index = document.getElementById("prefectures").value;
 
-	//document.getElementById( "download" ).innerHTML = "しばらくお待ちください"
-
 	document.getElementById( "downloadCSV" ).disabled = true;
 
 	if (typeof prefecturePopulationXML[index-1] === "undefined"){
-		xhr.open( "GET", url + index);
-		xhr.onreadystatechange = getAllPopulationProc;
-		xhr.send();
+		XMLRequest( url, index, getAllPopulationProc );
 	} else {
 		outputCSV();
 		document.getElementById( "downloadCSV" ).disabled = false;

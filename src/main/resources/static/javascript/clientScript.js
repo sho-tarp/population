@@ -163,14 +163,10 @@ function getAllPopulation(){
 	var url = "/api/population/all?id=";
 	var index = document.getElementById("prefectures").value;
 
-	//document.getElementById( "download" ).innerHTML = "しばらくお待ちください"
-
 	document.getElementById( "downloadCSV" ).disabled = true;
 
 	if (typeof prefecturePopulationXML[index-1] === "undefined"){
-		xhr.open( "GET", url + index);
-		xhr.onreadystatechange = getAllPopulationProc;
-		xhr.send();
+		XMLRequest( url, index, getAllPopulationProc );
 	} else {
 		outputCSV();
 		document.getElementById( "downloadCSV" ).disabled = false;
