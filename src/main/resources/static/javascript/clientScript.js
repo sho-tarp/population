@@ -7,22 +7,20 @@ var populations = new Array(47);
 //年度別人口データキャッシュ用
 var prefecturePopulationXML = new Array(47);
 
-function singleProc() {
+function getPopulationProc() {
 
 	var dataObject = {};
 
-	if ( xhr.readyState == 4) {
+	if ( xhr.readyState == 4 ) {
 		if ( xhr.status == 0) {
-			console.log("通信失敗");
+			console.log( "通信失敗" );
 		} else {
 			if ( xhr.status === 200 ) {
 				console.log( xhr.responseText );
 				
-				dataObject = parseXML(xhr.responseText);
-				var index = Number( document.getElementById("prefectures").value);
-				populations[index-1] = dataObject;				
-				//document.getElementById( "pop" ).innerHTML
-				//= dataObject["population"] + "万人です";
+				dataObject = parseXML( xhr.responseText );
+				var index = Number( document.getElementById( "prefectures" ).value );
+				populations[ index-1 ] = dataObject;
 				showPopulation();
 				
 			} else {
@@ -66,7 +64,7 @@ function getPopulation() {
 	//キャッシュ機能（一度読み込んだデータはリクエストしない）
 	if (typeof populations[index-1] === "undefined"){
 		xhr.open( "GET", url + index);
-		xhr.onreadystatechange = singleProc;
+		xhr.onreadystatechange = getPopulationProc;
 		xhr.send();
 	} else {
 		showPopulation();
