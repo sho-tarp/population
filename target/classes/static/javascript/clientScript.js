@@ -87,20 +87,26 @@ function parseXML(xmlData) {
 
 	var parser = new DOMParser();
     var dom = parser.parseFromString(xmlData, 'text/xml');
-    
     var element = dom.firstChild.firstChild;
-    
-    //各人口の取得
-    while(element != null) {
-		var nodeName = element.nodeName;
-		var nodeText = element.textContent;
-		//alert(nodeName+":"+nodeText);
-		dataObject[nodeName] = nodeText;
-		element = element.nextSibling;
-    }
+
+    dataObject = searchPopulation( element );
   
     return dataObject;
 };
+
+function searchPopulation( element ) {
+	var dataObject = {};
+
+	while(element != null) {
+		var nodeName = element.nodeName;
+		var nodeText = element.textContent;
+		dataObject[nodeName] = nodeText;
+		element = element.nextSibling;
+    }
+
+    return dataObject;
+
+}
 
 function outputCSV(){
 	
@@ -138,10 +144,11 @@ function outputCSV(){
 	}
 	
     createCSV( CSVString, index);
-        
+
     document.getElementById( "download" ).click();
     
 };
+
 
 function createCSV( CSVString, index ) {
 	var blob = new Blob([CSVString], {type:"text/csv"});
