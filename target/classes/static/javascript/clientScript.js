@@ -138,6 +138,7 @@ function outputCSV(){
 	}
 		
 	//CSV作成
+	/*
 	var blob = new Blob([CSVString], {type:"text/csv"});
 	var filename = prefecture + ".csv"
 	
@@ -150,10 +151,27 @@ function outputCSV(){
         	document.getElementById("download").href = window.URL.createObjectURL(blob);
         	document.getElementById("download").download = filename;
         }
+    */
+    createCSV( CSVString, index);
         
     document.getElementById( "download" ).click();
     
 };
+
+function createCSV( CSVString, index ) {
+	var blob = new Blob([CSVString], {type:"text/csv"});
+	var prefecture = document.getElementById("prefectures").options[Number(index)-1].text;
+	var filename = prefecture + ".csv"
+	
+	if (window.navigator.msSaveBlob) {
+		// msSaveOrOpenBlobの場合はファイルを保存せずに開ける
+        window.navigator.msSaveOrOpenBlob(blob, filename); 
+        } else {
+        	document.getElementById("download").href = window.URL.createObjectURL(blob);
+        	document.getElementById("download").download = filename;
+        }
+
+}
 
 function getAllPopulation(){
 	
