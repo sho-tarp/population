@@ -257,8 +257,7 @@ public class eStatAccessor {
 		return dataArray;
 	}
 	
-	public String returnXML( String[] population ) {
-		
+	private Document createXMLDocument( String[] population ){
 		DocumentBuilder documentBuilder = null;
 
 		try{
@@ -282,6 +281,13 @@ public class eStatAccessor {
 		statData.appendChild( totalPopulation );
 		statData.appendChild( malePopulation );
 		statData.appendChild( femalePopulation );
+		
+		return document;
+	}
+	
+	public String returnXML( String[] population ) {
+		
+		Document document = createXMLDocument( population );
 		
 		//DocumentからStringに変換
 		Transformer transformer = null;
