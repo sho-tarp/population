@@ -316,15 +316,13 @@ public class eStatAccessor {
 		return xmlData;
 	}
 	
-	public String returnYearsXML( String applicationID, String prefectureID ) {
-		System.out.println("returnYearsXML");
-
+	private HashMap<Integer, String[]> getHeiseiPopulations( String prefectureID ){
+		
 		HashMap<Integer, String[]> populations = new HashMap<Integer, String[]>();
-		String surveyYears = "";
 		
 		//平成の人口データを取得
 		for (int year = 1989; year < 2017; year++) {
-			surveyYears = String.valueOf(year);
+			String surveyYears = String.valueOf(year);
 			String statDataId = getStatsDataId( surveyYears );
 			
 			if ( ! statDataId.equals("") ){
@@ -337,6 +335,17 @@ public class eStatAccessor {
 				} catch (InterruptedException e){}
 			}
 		}
+		
+		return populations;
+	}
+	
+	public String returnYearsXML( String applicationID, String prefectureID ) {
+		System.out.println("returnYearsXML");
+
+		HashMap<Integer, String[]> populations = new HashMap<Integer, String[]>();
+		
+		//指定された都道府県の平成における人口
+		populations = getHeiseiPopulations( prefectureID );
 		
 		DocumentBuilder documentBuilder = null;
 
@@ -387,7 +396,6 @@ public class eStatAccessor {
 		//System.out.println(xmlData);
 		return xmlData;
 	}
-	
 	
 	public static void main( String[] args ){
 		
