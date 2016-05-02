@@ -26,6 +26,8 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 
+import com.fasterxml.jackson.annotation.JsonFormat.Value;
+
 public class eStatAccessor {
 	
 	String applicationID;
@@ -191,30 +193,8 @@ public class eStatAccessor {
 				Element datainf = ( Element )document.getElementsByTagName( "DATA_INF" ).item( 0 );
 				NodeList values = datainf.getElementsByTagName( "VALUE" );
 				
-				for ( int i = 0; i < values.getLength(); i++ ) {
-					Element value = ( Element )values.item( i );
-					String areaValue = value.getAttribute( "area" );
-					
-					//指定都道府県と一致する場合
-					if ( code.equals( areaValue ) ) {
-						
-						String cat01 = value.getAttribute( "cat01" );
-						String cat02 = value.getAttribute( "cat02" );
-						String population = value.getFirstChild().getNodeValue();
-						
-						//総人口データ(単位が千人なので万人に変換)
-						if ( cat02.equals( "001" ) || cat02.equals("") ) {
-						
-							if ( cat01.equals( "001" ) ) {
-								dataArray[0] = String.valueOf( Float.parseFloat( population ) / 10 );
-							} else if ( cat01.equals( "002" ) ) {
-								dataArray[1] = String.valueOf( Float.parseFloat( population ) / 10 );
-							} else if ( cat01.equals( "003" ) ) {
-								dataArray[2] = String.valueOf( Float.parseFloat( population ) / 10 );
-							}
-						}
-					}
-				}
+				dataArray = searchPrefecturePopulation( values, code );
+				
 			}
 			
 		} catch( Exception e ) {
@@ -224,6 +204,38 @@ public class eStatAccessor {
 		return dataArray;
 	}
 	
+	private String[] searchPrefecturePopulation( NodeList values, String code ){
+		
+		String[] dataArray = new String[3];
+		
+		for ( int i = 0; i < values.getLength(); i++ ) {
+			Element value = ( Element )values.item( i );
+			String areaValue = value.getAttribute( "area" );
+			
+			//指定都道府県と一致する場合
+			if ( code.equals( areaValue ) ) {
+				
+				String cat01 = value.getAttribute( "cat01" );
+				String cat02 = value.getAttribute( "cat02" );
+				String population = value.getFirstChild().getNodeValue();
+										
+				//総人口データ(単位が千人なので万人に変換)
+				if ( cat02.equals( "001" ) || cat02.equals("") ) {
+				
+					if ( cat01.equals( "001" ) ) {
+						dataArray[0] = String.valueOf( Float.parseFloat( population ) / 10 );
+					} else if ( cat01.equals( "002" ) ) {
+						dataArray[1] = String.valueOf( Float.parseFloat( population ) / 10 );
+					} else if ( cat01.equals( "003" ) ) {
+						dataArray[2] = String.valueOf( Float.parseFloat( population ) / 10 );
+					}
+				}
+			}
+			
+		}
+		return dataArray;
+	}
+ 	
 	private Document createXMLDocument( String[] population ){
 		DocumentBuilder documentBuilder = null;
 
