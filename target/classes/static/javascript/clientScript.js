@@ -110,39 +110,42 @@ function searchPopulation( element ) {
 
 function outputCSV(){
 	
-	var index = document.getElementById("prefectures").value
-	var prefecture = document.getElementById("prefectures").options[Number(index)-1].text;
-	
-	var CSVString = "";
-	var dataObject = {};
+	var index = document.getElementById( "prefectures" ).value;
 
-	CSVString += "#year, total, male, female\r\n";
-	var parser = new DOMParser();
-	var dom = parser.parseFromString(prefecturePopulationXML[index-1], 'text/xml');
-
-	var yearElement = dom.firstChild.firstChild;
-
-	while (yearElement != null){
-		var year = yearElement.getAttribute("year");
-		var element = yearElement.firstChild;
-		
-		dataObject = searchPopulation( element );
-		
-		CSVString += year+","+
-					dataObject["population"]+","+
-					dataObject["malePopulation"]+","+
-					dataObject["femalePopulation"]+"\r\n";
-		
-		dataObject = {};
-		yearElement = yearElement.nextSibling;
-	}
-	
-    createCSV( CSVString, index);
+	var CSVString = createCSVString( prefecturePopulationXML[ index-1 ] );
+    createCSV( CSVString, index );
 
     document.getElementById( "download" ).click();
     
 };
 
+
+function createCSVString( xmlData ) {
+
+	var dataObject = {};
+	var parser = new DOMParser();
+	var dom = parser.parseFromString( xmlData, 'text/xml' );
+	var yearElement = dom.firstChild.firstChild;
+
+	var CSVString = "#year, total, male, female\r\n";
+
+	while (yearElement != null){
+		var year = yearElement.getAttribute( "year" );
+		var element = yearElement.firstChild;
+		
+		dataObject = searchPopulation( element );
+		
+		CSVString += year + "," +
+					dataObject[ "population" ]+ "," +
+					dataObject[ "malePopulation" ]+ "," +
+					dataObject[ "femalePopulation" ] + "\r\n";
+		
+		dataObject = {};
+		yearElement = yearElement.nextSibling;
+	}
+
+	return CSVString;
+}
 
 function createCSV( CSVString, index ) {
 	var blob = new Blob([CSVString], {type:"text/csv"});
