@@ -70,17 +70,9 @@ public class eStatAccessor {
 		return statListURL;
 	}
 	
-	//統計表IDの取得
-	public String getStatsDataId( String surveyYears ) {
+	private String parseStatListXML( String statListXML ) {
 		
-		//統計表情報取得URL
-		String statListURL = createStatListURL( surveyYears );
-		
-		//統計表情報XML
-		String statListXML = getXML( statListURL );
-		
-		//統計表ID
-		String statsDataId ="";
+		String statsDataId = "";
 		
 		//XML解析
 		try{
@@ -109,6 +101,21 @@ public class eStatAccessor {
 		} catch (Exception e ) {
 			return statsDataId;
 		}
+	}
+	
+	//統計表IDの取得
+	public String getStatsDataId( String surveyYears ) {
+		
+		//統計表情報取得URL
+		String statListURL = createStatListURL( surveyYears );
+		
+		//統計表情報XML
+		String statListXML = getXML( statListURL );
+		
+		//統計表ID
+		String statsDataId = parseStatListXML( statListXML );
+
+		return statsDataId;
 	}
 	
 	//統計XMLデータの取得
