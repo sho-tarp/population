@@ -285,10 +285,7 @@ public class eStatAccessor {
 		return document;
 	}
 	
-	public String returnXML( String[] population ) {
-		
-		Document document = createXMLDocument( population );
-		
+	private String documentToString( Document document ) {
 		//DocumentからStringに変換
 		Transformer transformer = null;
 		StringWriter stringWriter = null;
@@ -308,8 +305,14 @@ public class eStatAccessor {
 		} catch ( TransformerException e ) {
 			e.printStackTrace();
 		}
-		
 		String xmlData = stringWriter.toString();
+		return xmlData;
+	}
+	
+	public String returnXML( String[] population ) {
+		
+		Document document = createXMLDocument( population );
+		String xmlData = documentToString( document );
 		return xmlData;
 	}
 	
