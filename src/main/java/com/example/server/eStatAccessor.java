@@ -104,7 +104,7 @@ public class eStatAccessor {
 	}
 	
 	//統計表IDの取得
-	public String getStatsDataId( String surveyYears ) {
+	private String getStatsDataId( String surveyYears ) {
 		
 		//統計表情報取得URL
 		String statListURL = createStatListURL( surveyYears );
@@ -119,7 +119,7 @@ public class eStatAccessor {
 	}
 	
 	//統計XMLデータの取得
-	public String getStatXML( String statsDataId ) { 
+	private String getStatXML( String statsDataId ) { 
 		
 		//統計データ取得URL
 		String statDataURL = "http://api.e-stat.go.jp/rest/2.0/app/getStatsData?";
@@ -134,7 +134,7 @@ public class eStatAccessor {
 	}
 		
 	//XMLデータ取得
-	public String getXML( String requestURL ) {
+	private String getXML( String requestURL ) {
 		
 		//HTTP通信によるXMLの受信
 		HttpURLConnection conn = null;
@@ -174,7 +174,7 @@ public class eStatAccessor {
 	}
 	
 	//XMLデータから各人口を抽出
-	public String[] parseXML( String xmlData, String code ) {
+	private String[] parseXML( String xmlData, String code ) {
 		
 		String[] dataArray = new String[3];
 		code += "000";
@@ -289,7 +289,7 @@ public class eStatAccessor {
 		return xmlData;
 	}
 	
-	public String returnXML( String[] population ) {
+	private String returnXML( String[] population ) {
 		
 		Document document = createXMLDocument( population );
 		String xmlData = documentToString( document );
