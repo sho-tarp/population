@@ -187,30 +187,7 @@ public class eStatAccessor {
 			
 			Document document = db.parse( is );
 			
-			//都道府県コードの取得
-			NodeList nl = document.getElementsByTagName( "CLASS_OBJ" );
-			Map<String, String> prefectureCodes = new HashMap<String, String>();
-
-			for ( int i = 0; i < nl.getLength(); i++ ) {
-				Element e = ( Element )nl.item( i );				
-				
-				if (e.getAttribute("id").equals("area")) {
-					NodeList areas = e.getElementsByTagName("CLASS");
-					
-					for (int j = 1; j < areas.getLength(); j++) {
-						Element area = (Element)areas.item(j);
-						String prefectureCode = area.getAttribute("code");
-						String prefectureName =  area.getAttribute("name");
-						prefectureCodes.put(prefectureName, prefectureCode);
-					}
-					break;
-				}
-			}
-			
-			//都道府県名から都道府県コードを取得
-			//String code = prefectureCodes.get( prefecture );
-			code += "000";			
-			//System.out.println(code);
+			code += "000";
 			
 			/*
 			//指定した都道府県名が無い場合
