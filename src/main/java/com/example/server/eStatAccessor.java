@@ -37,8 +37,7 @@ public class eStatAccessor {
 		this.applicationID = applicationID;
 	}
 	
-	//統計表IDの取得
-	public String getStatsDataId( String surveyYears ) {
+	private String createStatListURL( String surveyYears ) {
 		
 		//統計表情報取得URL
 		String statListURL = "http://api.e-stat.go.jp/rest/2.0/app/getStatsList?";
@@ -46,7 +45,7 @@ public class eStatAccessor {
 		//西暦から平成に変換
 		String heisei = String.valueOf( (Integer.parseInt( surveyYears ) + 12) % 100 );
 
-		String searchWord = "";
+		String searchWord;
 		
 		if ( Integer.parseInt(heisei) > 18) {
 			searchWord = "都道府県，男女別人口及び人口性比"  + " 平成"+ heisei +"年";
@@ -55,9 +54,6 @@ public class eStatAccessor {
 		}
 		
 		String encodedSearchWord = "";
-		
-		//統計表ID
-		String statsDataId = "";
 		
 		//検索ワードのURIエンコード
 		try{
@@ -71,8 +67,20 @@ public class eStatAccessor {
 		statListURL += "&statsCode=00200524";
 		statListURL += "&searchWord=" + encodedSearchWord;
 
+		return statListURL;
+	}
+	
+	//統計表IDの取得
+	public String getStatsDataId( String surveyYears ) {
+		
+		//統計表情報取得URL
+		String statListURL = createStatListURL( surveyYears );
+		
 		//統計表情報XML
 		String statListXML = getXML( statListURL );
+		
+		//統計表ID
+		String statsDataId ="";
 		
 		//XML解析
 		try{
@@ -292,7 +300,7 @@ public class eStatAccessor {
 		return xmlData;
 	}
 	
-	public static String returnYearsXML( String applicationID, String prefectureID ) {
+	public String returnYearsXML( String applicationID, String prefectureID ) {
 		System.out.println("returnYearsXML");
 		
 		eStatAccessor estataccessor = new eStatAccessor( applicationID );
@@ -390,7 +398,9 @@ public class eStatAccessor {
 	public static void main( String[] args ){
 		
 		String applicationID = "ca1cf60ecad380c0abb3dd9cfd9689de7f25eff2";
-		returnYearsXML(applicationID, "47");
+		eStatAccessor estataccessor = new eStatAccessor( applicationID );
+		estataccessor.getStatsDataId("2000");
+		//returnYearsXML(applicationID, "47");
 		/*
 		eStatAccessor estataccessor = new eStatAccessor( applicationID );
 		
