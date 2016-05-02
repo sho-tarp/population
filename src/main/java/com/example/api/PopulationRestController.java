@@ -28,18 +28,12 @@ public class PopulationRestController {
 	String applicationID = "ca1cf60ecad380c0abb3dd9cfd9689de7f25eff2";
 	eStatAccessor estataccessor = new eStatAccessor( applicationID );
 	String surveyYears = "2014";
-	String statDataId = estataccessor.getStatsDataId( surveyYears );
-	String xmlData = estataccessor.getStatXML( statDataId );
+	String xmlData = estataccessor.loadXMLData(surveyYears);
 	
 	@RequestMapping(value = "single", method = RequestMethod.GET)
 	String getPopulation(@RequestParam("id") String id) {
 		
-		//idから選択された都道府県の人口データを取得
-		String[] dataArray = estataccessor.parseXML(xmlData, id);
-
-		//XMLの取得
-		String populationXML = estataccessor.returnXML( dataArray );
-		
+		String populationXML = estataccessor.getSinglePopulation( xmlData, id );
 		return populationXML;
 		/*
 		if (populations.get(id) != null) {

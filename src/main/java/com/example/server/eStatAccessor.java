@@ -381,4 +381,18 @@ public class eStatAccessor {
 		return xmlData;
 	}
 	
+	public String loadXMLData( String surveyYears) {
+		
+		String statDataId = getStatsDataId( surveyYears );
+		String xmlData = getStatXML( statDataId );
+		return xmlData;
+	}
+	
+	public String getSinglePopulation( String xmlData, String id ) {
+
+		String[] dataArray = parseXML(xmlData, id);
+		String populationXML = returnXML( dataArray );
+		
+		return populationXML;
+	}
 }
