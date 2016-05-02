@@ -318,20 +318,18 @@ public class eStatAccessor {
 	
 	public String returnYearsXML( String applicationID, String prefectureID ) {
 		System.out.println("returnYearsXML");
-		
-		eStatAccessor estataccessor = new eStatAccessor( applicationID );
-		
+
 		HashMap<Integer, String[]> populations = new HashMap<Integer, String[]>();
 		String surveyYears = "";
 		
 		//平成の人口データを取得
 		for (int year = 1989; year < 2017; year++) {
 			surveyYears = String.valueOf(year);
-			String statDataId = estataccessor.getStatsDataId( surveyYears );
+			String statDataId = getStatsDataId( surveyYears );
 			
 			if ( ! statDataId.equals("") ){
-				String xmlData = estataccessor.getStatXML( statDataId );
-				String[] dataArray = estataccessor.parseXML(xmlData, prefectureID );
+				String xmlData = getStatXML( statDataId );
+				String[] dataArray = parseXML(xmlData, prefectureID );
 				populations.put(Integer.parseInt(surveyYears), dataArray);
 				
 				try{
