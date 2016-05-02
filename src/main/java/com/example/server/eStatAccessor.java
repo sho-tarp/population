@@ -385,27 +385,7 @@ public class eStatAccessor {
 			year.appendChild( femalePopulation );
 		}
 		
-		//DocumentからStringに変換
-		Transformer transformer = null;
-		StringWriter stringWriter = null;
-		try {
-			stringWriter = new StringWriter();
-			TransformerFactory transformerFactory = TransformerFactory.newInstance();
-			transformer = transformerFactory.newTransformer();
-		} catch ( TransformerConfigurationException e ) {
-			e.printStackTrace();
-		}
-		
-		transformer.setOutputProperty( "indent", "no" );
-		transformer.setOutputProperty( "encoding", "utf-8" );
-
-		try {
-			transformer.transform(new DOMSource( document ), new StreamResult( stringWriter ) );
-		} catch ( TransformerException e ) {
-			e.printStackTrace();
-		}
-		
-		String xmlData = stringWriter.toString();
+		String xmlData = documentToString( document );
 		//System.out.println(xmlData);
 		return xmlData;
 	}
