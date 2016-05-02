@@ -30,11 +30,6 @@ public class PopulationRestController {
 	String surveyYears = "2014";
 	String statDataId = estataccessor.getStatsDataId( surveyYears );
 	String xmlData = estataccessor.getStatXML( statDataId );
-		
-	@RequestMapping(value = {"", "/"}, method = RequestMethod.GET)
-	String getPopulation() {
-		return "100万人";
-	}
 	
 	@RequestMapping(value = "single", method = RequestMethod.GET)
 	String getPopulation(@RequestParam("id") String id) {
@@ -44,8 +39,7 @@ public class PopulationRestController {
 
 		//XMLの取得
 		String populationXML = estataccessor.returnXML( dataArray );
-		//System.out.println(populationXML);
-
+		
 		return populationXML;
 		/*
 		if (populations.get(id) != null) {
