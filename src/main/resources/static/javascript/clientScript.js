@@ -79,11 +79,7 @@ function showPopulation(){
 	var index = document.getElementById( "prefectures" ).value
 	
 	document.getElementById( "pop" ).innerHTML
-<<<<<<< HEAD
 					= populations[ index-1 ][ "population" ] + "万人です";
-=======
-				= populations[ index-1 ][ "population" ] + "万人です";
->>>>>>> parent of 6b9360b... プルダウンメニューに「----------」を追加
 };
 
 function parseXML( xmlData ) {

@@ -12,8 +12,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 @RequestMapping("population")
 public class PopulationController {
-	//@Autowired
-	//BookmarkService bookmarkService;
 
 	final static Map<String, String> prefectures = Collections.unmodifiableMap(
 			new LinkedHashMap<String, String>() {
