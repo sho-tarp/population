@@ -37,19 +37,10 @@ public class PopulationRestController {
 		
 		String populationXML = estataccessor.getSinglePopulation( xmlData, id );
 		return populationXML;
-		/*
-		if (populations.get(id) != null) {
-			//return populations.get(id);
-			return dataArray[0];
-		} else {
-			return "エラー";
-		}*/
 	}
 	
 	@RequestMapping(value = "all", method = RequestMethod.GET)
 	String getAllPopulation(@RequestParam("id") String id) {
-		//String prefecturePopulationsXML = estataccessor.returnYearsXML(applicationID, id);
-		//String prefecturePopulationsXML = estataccessor.returnYearsXML(applicationID, id, dataIdMap );
 		String prefecturePopulationsXML = estataccessor.returnYearsXML(applicationID, id, heiseiXMLMap );
 		return prefecturePopulationsXML;
 	}
