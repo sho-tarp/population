@@ -71,25 +71,10 @@ public class PopulationController {
 			put("沖縄県","47");
 		}
 	});
-	/*
-	@ModelAttribute
-	Population setUp() {
-		Population population = new Population();
-		return population;
-	}
-	*/
 		
 	@RequestMapping(value = {"", "/", "index"}, method = RequestMethod.GET)
 	String getIndex(Model model){
 		model.addAttribute("prefectures", prefectures);
 		return "population/index";
 	}
-	
-	//@ModelAttribute
-	/*
-	 Bookmark setUp() {
-		 Bookmark bookmark = new Bookmark();
-	     return bookmark;
-	     }*/
-	 
 }
