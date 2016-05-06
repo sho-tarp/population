@@ -39,7 +39,7 @@ function getAllPopulationProc() {
 				console.log( xhr.responseText );
 
 				var index = Number( document.getElementById( "prefectures" ).value );
-				prefecturePopulationXML[ index-1 ] = xhr.responseText;				
+				prefecturePopulationXML[ index-1 ] = xhr.responseText;
 				outputCSV();
 				
 			} else {
@@ -47,7 +47,9 @@ function getAllPopulationProc() {
 			}
 		}
 	}
+	document.getElementById( "message" ).innerHTML = "";
 	document.getElementById( "downloadCSV" ).disabled = false;
+	document.getElementById(　"prefectures"　).disabled = false;
 };
 
 function getPopulation() {
@@ -167,11 +169,15 @@ function getAllPopulation(){
 	var index = document.getElementById(　"prefectures"　).value;
 
 	document.getElementById( "downloadCSV" ).disabled = true;
+	document.getElementById( "message" ).innerHTML = "しばらくお待ちください";
+	document.getElementById(　"prefectures"　).disabled = true;
 
 	if (　typeof prefecturePopulationXML[　index-1　] === "undefined"　){
 		XMLRequest( url, index, getAllPopulationProc );
 	} else {
 		outputCSV();
+		document.getElementById( "message" ).innerHTML = "";
 		document.getElementById( "downloadCSV" ).disabled = false;
+		document.getElementById(　"prefectures"　).disabled = false;
 	}
 };
