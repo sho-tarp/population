@@ -37,20 +37,17 @@ public class eStatAccessor {
 		this.applicationID = applicationID;
 	}
 	
-	private String createStatListURL( String surveyYears ) {
-		
-		//統計表情報取得URL
-		String statListURL = "http://api.e-stat.go.jp/rest/2.0/app/getStatsList?";
+	private String getSearchWord( String surveyYears ) {
 		
 		//西暦から平成に変換
 		String heisei = String.valueOf( (Integer.parseInt( surveyYears ) + 12) % 100 );
 
 		String searchWord;
 		
-		if ( Integer.parseInt(heisei) > 18) {
-			searchWord = "都道府県，男女別人口及び人口性比"  + " 平成"+ heisei +"年";
+		if ( Integer.parseInt( heisei ) > 18) {
+			searchWord = "都道府県，男女別人口及び人口性比"  + " 平成"+ heisei + "年";
 		} else {
-			searchWord = "人口数及び性比－総人口 全国・都道府県" + " 平成"+ heisei +"年";
+			searchWord = "人口数及び性比－総人口 全国・都道府県" + " 平成" + heisei + "年";
 		}
 		
 		String encodedSearchWord = "";
@@ -61,12 +58,23 @@ public class eStatAccessor {
 		} catch ( Exception e ){
 			e.printStackTrace();
 		}
+		
+		return encodedSearchWord;
+	}
+	
+	private String createStatListURL( String surveyYears ) {
+		
+		//統計表情報取得URL
+		String statListURL = "http://api.e-stat.go.jp/rest/2.0/app/getStatsList?";
+		
+		//検索ワード
+		String searchWord = getSearchWord( surveyYears );
 				
 		//パラメータの追加
 		statListURL += "appId=" + applicationID;
 		statListURL += "&statsCode=00200524";
-		statListURL += "&searchWord=" + encodedSearchWord;
-
+		statListURL += "&searchWord=" + searchWord;
+		
 		return statListURL;
 	}
 	
@@ -395,4 +403,5 @@ public class eStatAccessor {
 		
 		return populationXML;
 	}
+
 }
