@@ -304,20 +304,24 @@ public class eStatAccessor {
 		return xmlData;
 	}
 	
-	public HashMap<Integer, String> getDataIdMap() {
-		HashMap<Integer, String> dataIdMap = new HashMap<Integer, String>();
+	public HashMap<Integer, String> getHeiseiXML() {
+		HashMap<Integer, String> heiseiXML = new HashMap<Integer, String>();
 		//平成の人口データを取得
 		for ( int year = 1989; year < 2017; year++ ) {
 			String surveyYears = String.valueOf( year );
 			
 			String statDataId = getStatsDataId( surveyYears );
-			dataIdMap.put( Integer.parseInt( surveyYears), statDataId);
+			
+			if ( ! statDataId.equals("") ){
+				String xmlData = getStatXML( statDataId );
+				heiseiXML.put(year, xmlData );
 
-			try{
-				Thread.sleep( 10 );
-			} catch ( InterruptedException e ){} 
+				try{
+					Thread.sleep( 50 );
+				} catch ( InterruptedException e ){}
+			} 
 		}
-		return dataIdMap;
+		return heiseiXML;
 	}
 	
 	private HashMap<Integer, String[]> getHeiseiPopulations( String prefectureID ){
@@ -345,7 +349,7 @@ public class eStatAccessor {
 	}
 	
 	//overload
-	private HashMap<Integer, String[]> getHeiseiPopulations( String prefectureID, HashMap<Integer, String> dataIdMap) {
+	private HashMap<Integer, String[]> getHeiseiPopulations( String prefectureID, HashMap<Integer, String> heiseiXMLMap) {
 		System.out.println("getHeiseiPopulations overload");
 		
 		HashMap<Integer, String[]> populations = new HashMap<Integer, String[]>();
@@ -354,10 +358,10 @@ public class eStatAccessor {
 		for ( int year = 1989; year < 2017; year++ ) {
 			String surveyYears = String.valueOf( year );
 			
-			String statDataId = dataIdMap.get( year );
+			String statDataId = getStatsDataId( surveyYears );
 			
 			if ( ! statDataId.equals("") ){
-				String xmlData = getStatXML( statDataId );
+				String xmlData = heiseiXMLMap.get( year );
 				String[] dataArray = parseXML( xmlData, prefectureID );
 				populations.put(Integer.parseInt( surveyYears ), dataArray );
 

@@ -21,7 +21,6 @@ public class PopulationController {
 	final static Map<String, String> prefectures = Collections.unmodifiableMap(
 			new LinkedHashMap<String, String>() {
 		{
-			put("----------", "99");
 			put("北海道","01");
 			put("青森県","02");
 			put("岩手県","03");

@@ -31,7 +31,7 @@ public class PopulationRestController {
 	eStatAccessor estataccessor = new eStatAccessor( applicationID );
 	String surveyYears = "2014";
 	String xmlData = estataccessor.loadXMLData(surveyYears);
-	HashMap<Integer, String> dataIdMap = estataccessor.getDataIdMap();
+	HashMap<Integer, String> heiseiXMLMap = estataccessor.getHeiseiXML();
 	
 	@RequestMapping(value = "single", method = RequestMethod.GET)
 	String getPopulation(@RequestParam("id") String id) {
@@ -50,7 +50,8 @@ public class PopulationRestController {
 	@RequestMapping(value = "all", method = RequestMethod.GET)
 	String getAllPopulation(@RequestParam("id") String id) {
 		//String prefecturePopulationsXML = estataccessor.returnYearsXML(applicationID, id);
-		String prefecturePopulationsXML = estataccessor.returnYearsXML(applicationID, id, dataIdMap );
+		//String prefecturePopulationsXML = estataccessor.returnYearsXML(applicationID, id, dataIdMap );
+		String prefecturePopulationsXML = estataccessor.returnYearsXML(applicationID, id, heiseiXMLMap );
 		return prefecturePopulationsXML;
 	}
 	
