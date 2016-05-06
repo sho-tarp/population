@@ -364,10 +364,6 @@ public class eStatAccessor {
 				String xmlData = heiseiXMLMap.get( year );
 				String[] dataArray = parseXML( xmlData, prefectureID );
 				populations.put(Integer.parseInt( surveyYears ), dataArray );
-
-				try{
-					Thread.sleep( 50 );
-				} catch ( InterruptedException e ){}
 			} 
 		}
 		
