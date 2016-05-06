@@ -76,8 +76,12 @@ function XMLRequest( url, pulldownIndex, functionName ) {
 function showPopulation(){
 	var index = document.getElementById( "prefectures" ).value
 	
-	document.getElementById( "pop" ).innerHTML
-				= populations[ index-1 ][ "population" ] + "万人です";
+	if (index == 99) {
+		document.getElementById( "pop" ).innerHTML = "";
+	} else {
+		document.getElementById( "pop" ).innerHTML
+					= populations[ index-1 ][ "population" ] + "万人です";
+	}
 };
 
 function parseXML( xmlData ) {
