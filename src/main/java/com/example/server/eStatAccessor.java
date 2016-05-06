@@ -35,10 +35,10 @@ public class eStatAccessor {
 		this.applicationID = applicationID;
 	}
 	
-	private String getSearchWord( String surveyYears ) {
+	private String getSearchWord( String surveyYear ) {
 		
 		//西暦から平成に変換
-		String heisei = String.valueOf( (Integer.parseInt( surveyYears ) + 12) % 100 );
+		String heisei = String.valueOf( (Integer.parseInt( surveyYear ) + 12) % 100 );
 
 		String searchWord;
 		
@@ -60,13 +60,13 @@ public class eStatAccessor {
 		return encodedSearchWord;
 	}
 	
-	private String createStatListURL( String surveyYears ) {
+	private String createStatListURL( String surveyYear ) {
 		
 		//統計表情報取得URL
 		String statListURL = "http://api.e-stat.go.jp/rest/2.0/app/getStatsList?";
 		
 		//検索ワード
-		String searchWord = getSearchWord( surveyYears );
+		String searchWord = getSearchWord( surveyYear );
 				
 		//パラメータの追加
 		statListURL += "appId=" + applicationID;
@@ -110,10 +110,10 @@ public class eStatAccessor {
 	}
 	
 	//統計表IDの取得
-	private String getStatsDataId( String surveyYears ) {
+	private String getStatsDataId( String surveyYear ) {
 		
 		//統計表情報取得URL
-		String statListURL = createStatListURL( surveyYears );
+		String statListURL = createStatListURL( surveyYear );
 		
 		//統計表情報XML
 		String statListXML = getXML( statListURL );
@@ -306,11 +306,11 @@ public class eStatAccessor {
 		HashMap<Integer, String> heiseiXML = new HashMap<Integer, String>();
 		//平成の人口データを取得
 		for ( int year = 1989; year < 2017; year++ ) {
-			String surveyYears = String.valueOf( year );
+			String surveyYear = String.valueOf( year );
 			
-			String statDataId = getStatsDataId( surveyYears );
+			String statDataId = getStatsDataId( surveyYear );
 			
-			if ( ! statDataId.equals("") ){
+			if ( statDataId.equals("") == false ){
 				String xmlData = getStatXML( statDataId );
 				heiseiXML.put(year, xmlData );
 
@@ -330,14 +330,14 @@ public class eStatAccessor {
 		
 		//平成の人口データを取得
 		for ( int year = 1989; year < 2017; year++ ) {
-			String surveyYears = String.valueOf( year );
+			String surveyYear = String.valueOf( year );
 			
-			String statDataId = getStatsDataId( surveyYears );
+			String statDataId = getStatsDataId( surveyYear );
 			
-			if ( ! statDataId.equals("") ){
+			if ( statDataId.equals("") == false ){
 				String xmlData = heiseiXMLMap.get( year );
 				String[] dataArray = parseXML( xmlData, prefectureID );
-				populations.put(Integer.parseInt( surveyYears ), dataArray );
+				populations.put(Integer.parseInt( surveyYear ), dataArray );
 			} 
 		}
 		
@@ -406,9 +406,9 @@ public class eStatAccessor {
 		return xmlData;
 	}
 	
-	public String loadXMLData( String surveyYears) {
+	public String loadXMLData( String surveyYear) {
 		
-		String statDataId = getStatsDataId( surveyYears );
+		String statDataId = getStatsDataId( surveyYear );
 		String xmlData = getStatXML( statDataId );
 		return xmlData;
 	}
