@@ -26,8 +26,6 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 
-import com.fasterxml.jackson.annotation.JsonFormat.Value;
-
 public class eStatAccessor {
 	
 	String applicationID;
