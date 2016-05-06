@@ -304,6 +304,22 @@ public class eStatAccessor {
 		return xmlData;
 	}
 	
+	public HashMap<Integer, String> getDataIdMap() {
+		HashMap<Integer, String> dataIdMap = new HashMap<Integer, String>();
+		//平成の人口データを取得
+		for ( int year = 1989; year < 2017; year++ ) {
+			String surveyYears = String.valueOf( year );
+			
+			String statDataId = getStatsDataId( surveyYears );
+			dataIdMap.put( Integer.parseInt( surveyYears), statDataId);
+
+			try{
+				Thread.sleep( 10 );
+			} catch ( InterruptedException e ){} 
+		}
+		return dataIdMap;
+	}
+	
 	private HashMap<Integer, String[]> getHeiseiPopulations( String prefectureID ){
 		
 		HashMap<Integer, String[]> populations = new HashMap<Integer, String[]>();
@@ -311,13 +327,40 @@ public class eStatAccessor {
 		//平成の人口データを取得
 		for ( int year = 1989; year < 2017; year++ ) {
 			String surveyYears = String.valueOf( year );
+			
 			String statDataId = getStatsDataId( surveyYears );
 			
 			if ( ! statDataId.equals("") ){
 				String xmlData = getStatXML( statDataId );
 				String[] dataArray = parseXML( xmlData, prefectureID );
 				populations.put(Integer.parseInt( surveyYears ), dataArray );
-				
+
+				try{
+					Thread.sleep( 50 );
+				} catch ( InterruptedException e ){}
+			} 
+		}
+		
+		return populations;
+	}
+	
+	//overload
+	private HashMap<Integer, String[]> getHeiseiPopulations( String prefectureID, HashMap<Integer, String> dataIdMap) {
+		System.out.println("getHeiseiPopulations overload");
+		
+		HashMap<Integer, String[]> populations = new HashMap<Integer, String[]>();
+		
+		//平成の人口データを取得
+		for ( int year = 1989; year < 2017; year++ ) {
+			String surveyYears = String.valueOf( year );
+			
+			String statDataId = dataIdMap.get( year );
+			
+			if ( ! statDataId.equals("") ){
+				String xmlData = getStatXML( statDataId );
+				String[] dataArray = parseXML( xmlData, prefectureID );
+				populations.put(Integer.parseInt( surveyYears ), dataArray );
+
 				try{
 					Thread.sleep( 50 );
 				} catch ( InterruptedException e ){}
@@ -382,6 +425,20 @@ public class eStatAccessor {
 		
 		//指定された都道府県の平成における人口
 		populations = getHeiseiPopulations( prefectureID );
+		
+		Document document = createHeiseiPopulationsDocument( populations, prefectureID );
+		String xmlData = documentToString( document );
+
+		return xmlData;
+	}
+	
+	public String returnYearsXML( String applicationID, String prefectureID, HashMap<Integer, String> HeiseiXML ) {
+		System.out.println("returnYearsXML");
+
+		HashMap<Integer, String[]> populations = new HashMap<Integer, String[]>();
+		
+		//指定された都道府県の平成における人口
+		populations = getHeiseiPopulations( prefectureID, HeiseiXML );
 		
 		Document document = createHeiseiPopulationsDocument( populations, prefectureID );
 		String xmlData = documentToString( document );
