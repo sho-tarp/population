@@ -29,9 +29,8 @@ public class PopulationRestController {
 	//XMLの取得
 	String applicationID = "ca1cf60ecad380c0abb3dd9cfd9689de7f25eff2";
 	eStatAccessor estataccessor = new eStatAccessor( applicationID );
-	String surveyYears = "2014";
-	String xmlData = estataccessor.loadXMLData(surveyYears);
 	HashMap<Integer, String> heiseiXMLMap = estataccessor.getHeiseiXML();
+	String xmlData = heiseiXMLMap.get( 2014 );
 	
 	@RequestMapping(value = "single", method = RequestMethod.GET)
 	String getPopulation(@RequestParam("id") String id) {
