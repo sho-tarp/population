@@ -25,7 +25,7 @@ public class PopulationRestController {
 	
 	@RequestMapping(value = "all", method = RequestMethod.GET)
 	String getAllPopulation(@RequestParam("id") String id) {
-		String prefecturePopulationsXML = estataccessor.returnYearsXML(applicationID, id, heiseiXMLMap );
+		String prefecturePopulationsXML = estataccessor.returnYearsXML(id, heiseiXMLMap );
 		return prefecturePopulationsXML;
 	}	
 }

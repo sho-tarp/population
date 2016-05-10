@@ -392,7 +392,7 @@ public class eStatAccessor {
 		return document;
 	}
 	
-	public String returnYearsXML( String applicationID, String prefectureID, HashMap<Integer, String> HeiseiXML ) {
+	public String returnYearsXML( String prefectureID, HashMap<Integer, String> HeiseiXML ) {
 		System.out.println("returnYearsXML");
 
 		HashMap<Integer, String[]> populations = new HashMap<Integer, String[]>();
