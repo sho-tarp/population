@@ -48,6 +48,11 @@ public class eStatAccessor {
 			searchWord = "人口数及び性比－総人口 全国・都道府県" + " 平成" + heisei + "年";
 		}
 		
+		return searchWord;
+	}
+	
+	private String encodeStringToURL( String searchWord ) {
+		
 		String encodedSearchWord = "";
 		
 		//検索ワードのURIエンコード
@@ -67,11 +72,12 @@ public class eStatAccessor {
 		
 		//検索ワード
 		String searchWord = getSearchWord( surveyYear );
+		String encordedSearchWord = encodeStringToURL( searchWord );
 				
 		//パラメータの追加
 		statListURL += "appId=" + applicationID;
 		statListURL += "&statsCode=00200524";
-		statListURL += "&searchWord=" + searchWord;
+		statListURL += "&searchWord=" + encordedSearchWord;
 		
 		return statListURL;
 	}
@@ -244,7 +250,6 @@ public class eStatAccessor {
  	
 	private Document createXMLDocument( String[] population ){
 		DocumentBuilder documentBuilder = null;
-
 		try{
 			documentBuilder = DocumentBuilderFactory.newInstance()
 					.newDocumentBuilder();
